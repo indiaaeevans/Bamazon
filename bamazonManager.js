@@ -15,7 +15,7 @@ connection.connect(function(err) {
 });
 
 // List a set of menu options:
-function menu(){
+function menu() {
 	inquirer.prompt([
       { name: "selection",
         type: "list",
@@ -41,24 +41,27 @@ function menu(){
 		    case "Add New Product":
 		    	addProduct();
 		    	break;
-		}
+        default:
+          console.log("Not a valid request.");
+		    }
       });
 }
 
 // Display all of the items available for sale
 function displayItems() {
 	var query = "SELECT item_id, product_name, price, stock_quantity FROM products";
-    connection.query(query, function(err, results) {
-    	if (err) throw err;
-    	for (var i = 0; i < results.length; i++) {
+  connection.query(query, function(err, results) {
+    if (err) throw err;
+    for (var i = 0; i < results.length; i++) {
 			console.log("Item ID: " + results[i].item_id + " || Name: " + results[i].product_name); 
 			console.log("Price: $" + results[i].price + " || Units in stock: " + results[i].stock_quantity);
 			console.log("________________________________________");
-      	}
-      	menu();
-     });
+    }
+    menu();
+  });
 }
 
+// Display all of the items with low inventory (<5)
 function lowInventory() {
 	var query = 'SELECT item_id, product_name, stock_quantity FROM products WHERE stock_quantity < 5';
 	connection.query(query, function (error, results, fields) {
@@ -68,26 +71,25 @@ function lowInventory() {
   			menu();
   			return;
   		}
-  		console.log("\nItems with < 5 units in stock:");
+  		console.log("\nItems with < 5 units in stock:\n");
   		for (var i = 0; i < results.length; i++) {
-			console.log("Item ID: " + results[i].item_id + " || Name: " + results[i].product_name); 
-			console.log("Units in stock: " + results[i].stock_quantity);
-			console.log("________________________________________");
-      	}
-      	menu();
+			   console.log("Item ID: " + results[i].item_id + " || Name: " + results[i].product_name); 
+			   console.log("Units in stock: " + results[i].stock_quantity + "\n");
+      }
+      menu();
 	});
 }
 
 function addInventory() {
 	inquirer.prompt([
-    	{ 	name: "id",
-        	type: "input",
-        	message: "Please enter the ID of the product:"
-      	},
-      	{ 	name: "quantity",
-      		type: "input",
-      		message: "Please specify how many units you would like to add:"
-      	}
+    	{ name: "id",
+        type: "input",
+        message: "Please enter the ID of the product:"
+      },
+      { name: "quantity",
+      	type: "input",
+      	message: "Please specify how many units you would like to add:"
+      }
       ]).then(function (answers) {
       	var id = answers.id;
       	// check if valid numbers were submitted by the user
@@ -96,22 +98,23 @@ function addInventory() {
       		addInventory();
       	} else {
       		// confirm what they wanted to add
-      		console.log("You requested to add " + answers.quantity + " units to item ID " + answers.id + ".");
+          console.log("________________________________________");
+      		console.log("\nYou requested to add " + answers.quantity + " units to item ID " + answers.id + ".");
       		// retrieve the current stock quantity from table
       		var query1 = "SELECT stock_quantity FROM products WHERE item_id = ?";
-    		connection.query(query1, [id], function(err, results) {
-    			if (err) throw err;
+    		  connection.query(query1, [id], function(err, results) {
+    			 if (err) throw err;
       			// update the stock quantity in the table
       			var query2 = 'UPDATE products SET stock_quantity = ? WHERE item_id = ?'
-				connection.query(query2, [parseInt(results[0].stock_quantity) + parseInt(answers.quantity), answers.id], 
-				function (error, results, fields) {
-					if (error) throw error;
-					console.log("\nSuccesfully updated inventory.\n")
-					menu();
-				});
-			});
-		}
-	});     
+				    connection.query(query2, [parseInt(results[0].stock_quantity) + parseInt(answers.quantity), answers.id], 
+				    function (error, results, fields) {
+					   if (error) throw error;
+					   console.log("\nSuccesfully updated inventory!\n")
+					   menu();
+				    });
+			     });
+		    }
+	   });     
 }
 
 function addProduct() {
@@ -125,7 +128,8 @@ function addProduct() {
       		type: "input",
       		message: "Please specify which department to sell in:"
       	},
-      	{ 	name: "quantity",
+      	{ 	
+          name: "quantity",
       		type: "input",
       		message: "Please specify how many units are being added:"
       	},
@@ -135,7 +139,23 @@ function addProduct() {
       		message: "Please specify the price per unit: $"
       	}
       ]).then(function (answers) {
-      	console.log("\nProduct was added successfully!\n");
-      	menu();
+        if(isNaN(answers.quantity || answers.price)){
+      	 console.log("Please enter a valid quantity and price.")
+      	 addProduct();
+      	} else {
+          
+          var post  = {
+            product_name: answers.name,
+            department_name: answers.department,
+            stock_quantity: answers.quantity,
+            price: answers.price
+          };
+
+          connection.query('INSERT INTO products SET ?', post, function (err, result) {
+            if (err) throw err;
+            console.log("\nProduct was added successfully!\n");
+            menu();
+          });
+      	}
       });
 }

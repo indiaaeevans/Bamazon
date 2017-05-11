@@ -21,6 +21,7 @@ function displayItems() {
     	if (err) throw err;
     	for (var i = 0; i < results.length; i++) {
 			console.log("Item ID: " + results[i].item_id + " || Name: " + results[i].product_name + " || Price: $" + results[i].price);
+      console.log("______________________________________________________");
 			// console.log("Units in stock: " + results[i].stock_quantity);
       	}
       	newOrder();
@@ -52,7 +53,7 @@ function newOrder() {
 		    	if (err) throw err;
 		    	else if (answers.quantity > res[0].stock_quantity){
 		      	console.log("There is not enough in stock to fulfill the order.");
-		      	return false;
+		      	orderAgain();
 		      	// if your store has enough of the product, fulfill the customer's order.
 		      	} else {
 			      	console.log("There is enough in stock to fulfill the order.");
