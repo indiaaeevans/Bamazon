@@ -60,6 +60,15 @@ If the manager would like to add inventory to an existing product:
 
 ![image](https://cloud.githubusercontent.com/assets/22288641/25956154/faede12e-3638-11e7-85d0-aaa3580ee16f.png)
 
-The app will prompt them to input product details.  Once added, they will receive a confirmation.
+The app will prompt them to input product ID and quantity to add.  Once added, they will receive a confirmation.
 
 ![image](https://cloud.githubusercontent.com/assets/22288641/25956163/fb0a00ca-3638-11e7-9502-1586720c9679.png)
+
+The manager can also add new products to the store.  They will need to input the product name, department, price, and quantity.
+
+![image](https://cloud.githubusercontent.com/assets/22288641/25956155/faef04d2-3638-11e7-8ada-3172307833e7.png)
+
+Once added successfully, the new item will be available in the product list.
+
+![image](https://cloud.githubusercontent.com/assets/22288641/25956165/fb0e3bae-3638-11e7-9944-f55d75074485.png)
+
