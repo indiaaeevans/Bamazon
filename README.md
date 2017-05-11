@@ -4,7 +4,10 @@ This app features an Amazon-like storefront using MySQL.
 
 With Customer-View, the app will take in orders from customers and deplete stock from the store's inventory accordingly.  With Manager-View, the app will allow a “manager” to view products, check on low inventory, add to inventory, and add new products.
 
+_____________________________________________________
+
 Customer View Demo:
+_____________________________________________________
 
 The app will first present a list of products for sale.
 
@@ -27,3 +30,36 @@ If they say yes, then the app will present the list of products again.
 If they say no, then they will be thanked for their order.
 
 ![image](https://cloud.githubusercontent.com/assets/22288641/25955338/fd0b7996-3636-11e7-9a8f-440939d526b9.png)
+
+_____________________________________________________
+
+Manager View Demo:
+_____________________________________________________
+
+The app will first present a menu of options.
+
+![image](https://cloud.githubusercontent.com/assets/22288641/25956158/faf54eaa-3638-11e7-923d-04610b487cb5.png)
+
+The manager can view a list of all products for sale.
+
+![image](https://cloud.githubusercontent.com/assets/22288641/25956162/fb08686e-3638-11e7-9d2c-a9f39d4544b6.png)
+
+The manager can view items with low inventory.
+
+![image](https://cloud.githubusercontent.com/assets/22288641/25956164/fb0b809e-3638-11e7-8178-292c230ec812.png)
+
+If there are any items low in stock then the app will display these to the manager.
+
+![image](https://cloud.githubusercontent.com/assets/22288641/25956156/faf060a2-3638-11e7-9b12-9a3ae75cedc3.png)
+
+If there are no items low in stock, they will receive a message.
+
+![image](https://cloud.githubusercontent.com/assets/22288641/25956157/faf1eb20-3638-11e7-891f-1e883c02eb3f.png)
+
+If the manager would like to add inventory to an existing product:
+
+![image](https://cloud.githubusercontent.com/assets/22288641/25956154/faede12e-3638-11e7-85d0-aaa3580ee16f.png)
+
+The app will prompt them to input product details.  Once added, they will receive a confirmation.
+
+![image](https://cloud.githubusercontent.com/assets/22288641/25956163/fb0a00ca-3638-11e7-9502-1586720c9679.png)
